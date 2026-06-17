@@ -42,7 +42,7 @@ jobs:
       # 6. 產生圖表
       - name: Generate charts
         run: |
-          python analytics/create_charts.py
+          python analytics/create_chart.py
 
       # 7. 把更新後的資料和圖表 commit 回 repo
       - name: Commit and push results
