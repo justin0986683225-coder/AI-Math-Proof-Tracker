@@ -1,14 +1,14 @@
-# 爬蟲所需 (crawler)
+# --- 爬蟲所需 (arxiv_fetch.py) ---
 arxiv==2.1.0
-requests==2.31.0
 
-# 分類器所需 (classifier)
-google-generativeai==0.3.0
-python-dotenv==1.0.0
+# --- 數據處理與解決版本衝突 ---
+pandas==2.0.3
+numpy<2.0.0
 
-# 畫圖所需 (analytics)
+# --- 分類器所需 (paper_classifier.py) ---
+# 你的程式碼使用的是最新的 google.genai，所以套件名稱要用這個
+google-genai
+
+# --- 畫圖所需 (create_chart.py) ---
 matplotlib==3.7.2
 seaborn==0.12.2
-
-# 共用資料處理
-pandas==2.0.3
