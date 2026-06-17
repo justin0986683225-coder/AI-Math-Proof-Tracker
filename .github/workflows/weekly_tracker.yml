@@ -1,0 +1,54 @@
+name: Weekly arXiv Math Paper Tracker
+
+on:
+  schedule:
+    # 每週一 UTC 00:00 自動執行（台灣時間週一早上 8:00）
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+    # 允許手動在 GitHub 網頁上觸發
+
+jobs:
+  run-tracker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 拉取最新程式碼
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. 安裝 Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. 安裝所有套件
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # 4. 執行爬蟲
+      - name: Run crawler
+        run: |
+          python crawler/arxiv_fetch.py
+
+      # 5. 執行分類器
+      - name: Run classifier
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python classifier/paper_classifier.py
+
+      # 6. 產生圖表
+      - name: Generate charts
+        run: |
+          python analytics/create_charts.py
+
+      # 7. 把更新後的資料和圖表 commit 回 repo
+      - name: Commit and push results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Actions"
+          git add database/
+          git diff --quiet && git diff --staged --quiet || git commit -m "📊 Auto update: $(date +'%Y-%m-%d')"
+          git push

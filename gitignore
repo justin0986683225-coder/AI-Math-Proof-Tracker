@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# 環境變數（絕對不要上傳 API Key！）
+.env
+*.env
+
+# 系統檔案
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# 只保留 latest/ 和有時間戳的資料夾，不追蹤暫存圖片
+# （如果你不想把所有歷史圖表都推上去，可以取消下面的註解）
+# database/charts/2*/
